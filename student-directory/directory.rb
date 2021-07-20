@@ -12,20 +12,19 @@ students = [
   {:name => "Norman Bates", :cohort => :november}
 ]
 def print_header
-  puts "Search for a student"
+  puts "The students of Villains Academy"
   puts "-------------"
 end
 
 def print(students)
-  students_begin_with = []
-  letter = gets.chomp
+  less_than_12_chars = []
   students.each do |student|
-    if student[:name].start_with?(letter.upcase)
-      students_begin_with << student[:name]
+    if student[:name].length < 12
+      less_than_12_chars << student[:name]
     end
   end
-  puts students_begin_with
-  puts "There are #{students_begin_with.count} students that begin with the letter '#{letter.upcase}'"
+  puts less_than_12_chars
+  puts "There are #{less_than_12_chars.count} students with names less than 12 charaters long"
 end
 
 def print_footer(names)
