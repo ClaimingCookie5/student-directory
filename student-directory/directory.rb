@@ -17,14 +17,12 @@ def print_header
 end
 
 def print(students)
-  less_than_12_chars = []
-  students.each do |student|
-    if student[:name].length < 12
-      less_than_12_chars << student[:name]
-    end
+  counter = 0
+  while counter < students.count
+    puts "#{students[counter][:name]} (#{students[counter][:cohort]} cohort)"
+    counter += 1
   end
-  puts less_than_12_chars
-  puts "There are #{less_than_12_chars.count} students with names less than 12 charaters long"
+  
 end
 
 def print_footer(names)
