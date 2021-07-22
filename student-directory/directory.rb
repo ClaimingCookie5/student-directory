@@ -1,38 +1,17 @@
-
-def input_students
-  center_length = 48
-  students = []
-  puts "Please enter the names of the students".center(center_length)
-  puts "To finish, just hit return twice".center(center_length)
-  name = gets.chomp
-  while !name.empty? do
-    puts "Please enter the cohort of the student".center(center_length)
-    month = gets.chomp
-    if month.empty?
-      month = "Unknown"
-    end
-    puts "Please enter the height of the student".center(center_length)
-    height = gets.chomp
-    if height.empty?
-      height = "Unknown"
-    end
-    puts "Please enter the country of birth of the student".center(center_length)
-    country = gets.chomp
-    if country.empty?
-      country = "Unknown"
-    end
-    puts "Please enter the hobbies of the student".center(center_length)
-    hobby = gets.chomp
-    if hobby.empty?
-      hobby = "Unknown"
-    end
-    students << {:name => name, :cohort => month, :height => height, :country_of_birth => country, :hobbies => hobby}
-    puts "Now we have #{students.count} students".center(center_length)
-    puts "Please enter the names of the students".center(center_length)
-    name = gets.chomp
-  end
-  students
-end
+require 'date'
+students = [
+  {:name => "Dr. Hannibal Lecter", :cohort => :february},
+  {:name => "Darth Vader", :cohort => :february},
+  {:name => "Nurse Ratched", :cohort => :march},
+  {:name => "Michael Corleone", :cohort => :march},
+  {:name => "Alex DeLarge", :cohort => :july},
+  {:name => "The Wicked Witch of the West", :cohort => :july},
+  {:name => "Terminator", :cohort => :november},
+  {:name => "Freddy Krueger", :cohort => :november},
+  {:name => "The Joker", :cohort => :november},
+  {:name => "Joffrey Baratheon", :cohort => :november},
+  {:name => "Norman Bates", :cohort => :november}
+]
 
 def print_header
   center_length = 48
@@ -41,14 +20,18 @@ def print_header
 end
 
 def print(students)
-  center_length = 48
+  students_by_cohort = {}
   students.each do |student| 
-  puts "Name: #{student[:name]}
-        Cohort: #{student[:cohort]}
-        Height: #{student[:height]}
-        Country of birth: #{student[:country_of_birth]}
-        Hobbies: #{student[:hobbies]}".lines.map { |line| line.strip.center(center_length) }.join("\n")
-      end
+    cohort = student[:cohort]
+    if students_by_cohort[cohort] == nil
+      students_by_cohort[cohort] =[]
+    end
+    students_by_cohort[cohort] << student[:name]
+  end
+  
+  students_by_cohort.each do |key, value|
+    puts "#{key.to_s.capitalize}: #{value.join(", ")}"
+  end
 end
 
 def print_footer(names)
@@ -63,7 +46,7 @@ def print_footer(names)
   end 
 end
 
-students = input_students
+
 print_header
 print(students)
 print_footer(students)
