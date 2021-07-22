@@ -1,25 +1,26 @@
-require 'date'
-students = [
-  {:name => "Dr. Hannibal Lecter", :cohort => :february},
-  {:name => "Darth Vader", :cohort => :february},
-  {:name => "Nurse Ratched", :cohort => :march},
-  {:name => "Michael Corleone", :cohort => :march},
-  {:name => "Alex DeLarge", :cohort => :july},
-  {:name => "The Wicked Witch of the West", :cohort => :july},
-  {:name => "Terminator", :cohort => :november},
-  {:name => "Freddy Krueger", :cohort => :november},
-  {:name => "The Joker", :cohort => :november},
-  {:name => "Joffrey Baratheon", :cohort => :november},
-  {:name => "Norman Bates", :cohort => :november}
-]
-
 def print_header
   center_length = 48
   puts "The students of Villains Academy".center(center_length)
   puts "-------------".center(center_length)
 end
 
+def input_students
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
+  students = []
+  name = gets.gsub("\n", "")
+  while !name.empty? do
+    puts "Please enter the chort of #{name}"
+    month = gets.gsub("\n", "")
+    students << {:name => name, :cohort => month}
+    puts "Now we have #{students.count} students"
+    name = gets.chomp
+  end
+  students
+end
+
 def print(students)
+  center_length = 48
   students_by_cohort = {}
   students.each do |student| 
     cohort = student[:cohort]
@@ -30,7 +31,7 @@ def print(students)
   end
   
   students_by_cohort.each do |key, value|
-    puts "#{key.to_s.capitalize}: #{value.join(", ")}"
+    puts "#{key.to_s.capitalize}: #{value.join(", ").capitalize}".center(center_length)
   end
 end
 
@@ -46,7 +47,7 @@ def print_footer(names)
   end 
 end
 
-
+students = input_students
 print_header
 print(students)
 print_footer(students)
