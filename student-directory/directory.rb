@@ -1,5 +1,8 @@
-@students = []
 
+@students = []
+def file
+  print __FILE__ 
+end
 def print_menu
     puts "1. Input the students"
     puts "2. Show the students"
@@ -92,7 +95,7 @@ end
 
 def load_students_info(filename = "students.csv")
   puts "What file would you like to load?"
-  puts "Hit return if you would like to load students.csv"
+  puts "Hit return if you would like to load students."
   file_name = gets.chomp
   File.open("students.csv" || "#{file_name}" , "r") do |file|
     file.readlines.each do |line|
@@ -118,6 +121,6 @@ def student_hash_format(name, cohort)
   {:name => name, :cohort => cohort}
 end
 
-
+file
 try_load_students
 interactive_menu
