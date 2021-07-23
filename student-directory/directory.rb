@@ -99,7 +99,6 @@ def load_students_info(filename = "students.csv")
 end
 
 def try_load_students
-  
   filename = ARGV.first
   return if filename.nil?
   if File.exists?(filename)
@@ -109,7 +108,6 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit
   end
-  load_students_info
 end
 
 def student_hash_format(name, cohort)
