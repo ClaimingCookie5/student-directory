@@ -26,6 +26,7 @@ def process(selection)
       when "4"
         load_students_info
       when "9"
+        puts "Bye"
         exit
       else
         puts "I don't know what you mean, try again"
@@ -43,7 +44,7 @@ def input_students
   puts "To finish, just hit return twice"
   name = STDIN.gets.chomp
   while !name.empty? do
-    @students << {:name => name.capitalize, :cohort => :november}
+    @students << student_hash_format(name.capitalize, :november)
     puts "Now we have #{@students.count} students"
     name = STDIN.gets.chomp
   end
@@ -52,6 +53,7 @@ end
 
 def print_students_list
   center_length = 48
+  puts "Printing student list".center(center_length)
   @students.each do |student| 
     puts "#{student[:name]} (#{student[:cohort]} cohort)".center(center_length)
   end
@@ -76,6 +78,7 @@ def show_students
 end
 
 def save_students_info
+  puts "Saving student information"
   file = File.open("students.csv", "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -86,15 +89,17 @@ def save_students_info
 end
 
 def load_students_info(filename = "students.csv")
+  puts "Loading student information"
   file = File.open("students.csv", "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
-    @students << {:name => name, :cohort => cohort.to_sym}
+    @students << student_hash_format(name, cohort.to_sym)
   end
   file.close
 end
 
 def try_load_students
+  
   filename = ARGV.first
   return if filename.nil?
   if File.exists?(filename)
@@ -104,8 +109,13 @@ def try_load_students
     puts "Sorry, #{filename} doesn't exist."
     exit
   end
+  load_students_info
 end
+
+def student_hash_format(name, cohort)
+  {:name => name, :cohort => cohort}
+end
+
 
 try_load_students
 interactive_menu
-  
