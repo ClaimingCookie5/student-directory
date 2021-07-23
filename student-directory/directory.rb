@@ -3,8 +3,8 @@
 def print_menu
     puts "1. Input the students"
     puts "2. Show the students"
-    puts "3. Save the list to students.csv"
-    puts "4. Load the list from students.csv"
+    puts "3. Save the list to a file of your choice"
+    puts "4. Load the list from a file of your choice"
     puts "9. Exit"
 end
 
@@ -80,26 +80,26 @@ end
 def save_students_info(*file_name)
   puts "Where you would you like to save the student information?"
   file_name = gets.chomp
-  file = File.open("#{file_name}", "w")
-  @students.each do |student|
-    student_data = [student[:name], student[:cohort]]
-    csv_line = student_data.join(",")
-    file.puts csv_line
+  File.open("#{file_name}", "w") do |file|
+    @students.each do |student|
+      student_data = [student[:name], student[:cohort]]
+      csv_line = student_data.join(",")
+      file.puts csv_line
+    end
   end
   puts "Saving student information"
-  file.close
 end
 
 def load_students_info(filename = "students.csv")
   puts "What file would you like to load?"
-  puts "Hit return if you would like to load default file"
+  puts "Hit return if you would like to load students.csv"
   file_name = gets.chomp
-  file = File.open("students.csv" || "#{file_name}", "r")
-  file.readlines.each do |line|
-    name, cohort = line.chomp.split(",")
-    @students << student_hash_format(name, cohort.to_sym)
+  File.open("students.csv" || "#{file_name}" , "r") do |file|
+    file.readlines.each do |line|
+      name, cohort = line.chomp.split(",")
+      @students << student_hash_format(name, cohort.to_sym)
+    end
   end
-  file.close
 end
 
 def try_load_students
