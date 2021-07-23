@@ -77,20 +77,24 @@ def show_students
     print_footer
 end
 
-def save_students_info
-  puts "Saving student information"
-  file = File.open("students.csv", "w")
+def save_students_info(*file_name)
+  puts "Where you would you like to save the student information?"
+  file_name = gets.chomp
+  file = File.open("#{file_name}", "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
     file.puts csv_line
   end
+  puts "Saving student information"
   file.close
 end
 
 def load_students_info(filename = "students.csv")
-  puts "Loading student information"
-  file = File.open("students.csv", "r")
+  puts "What file would you like to load?"
+  puts "Hit return if you would like to load default file"
+  file_name = gets.chomp
+  file = File.open("students.csv" || "#{file_name}", "r")
   file.readlines.each do |line|
     name, cohort = line.chomp.split(",")
     @students << student_hash_format(name, cohort.to_sym)
